@@ -1,0 +1,8 @@
+ccxt==1.95.16
+pandas==1.3.5
+ta==0.9.0
+time
+requests==2.25.1
+json==2.0.9
+kucoin-python
+
