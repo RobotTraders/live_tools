@@ -1,13 +1,13 @@
 {
     "homemade_strategy_1": {
-        "apiKey":"",
+        "key":"",
         "secret":"",
-        "subAccountName":""
+        "passphrase":""
     },
     "example": {
-        "apiKey":"",
+        "key":"",
         "secret":"",
-        "subAccountName":""
+        "passphrase":""
     },
 }
 
