@@ -81,12 +81,12 @@ min_base_for_sell = float(truncate(float(min_quote_for_buy)/price))
 if entry and balance_quote > min_quote_for_buy:
         amount = truncate(balance_quote/price)
         trade.create_market_order(f'{symbol_base}-{symbol_quote}', 'buy', size=amount)
-        print(f"Bought {amount} {symbol_base} at {price}  (EMA-st = {data['EMA-st']}, EMA-lt = {data['EMA-lt']}, RSI = {data['RSI']})")
+        #print(f"Bought {amount} {symbol_base} at {price}  (EMA-st = {data['EMA-st']}, EMA-lt = {data['EMA-lt']}, RSI = {data['RSI']})")
 
 elif take_profit and balance_base > min_base_for_sell:
         amount = truncate(balance_base)
         trade.create_market_order(f'{symbol_base}-{symbol_quote}', 'sell', size=amount)
-        print(f"Sold {amount} {symbol_base} at {price} (EMA-st = {data['EMA-st']}, EMA-lt = {data['EMA-lt']}, RSI = {data['RSI']})")
-
+        #print(f"Sold {amount} {symbol_base} at {price} (EMA-st = {data['EMA-st']}, EMA-lt = {data['EMA-lt']}, RSI = {data['RSI']})")
 else:
-  print(f"Sorry mate, nothing much to do (EMA-st = {data['EMA-st']}, EMA-lt = {data['EMA-lt']}, RSI = {data['RSI']})")
+    pass
+    #  print(f"Sorry mate, nothing much to do (EMA-st = {data['EMA-st']}, EMA-lt = {data['EMA-lt']}, RSI = {data['RSI']})")
