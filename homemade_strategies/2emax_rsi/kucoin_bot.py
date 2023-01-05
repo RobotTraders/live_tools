@@ -16,9 +16,9 @@ from kucoin.client import User
 ########################
 ### Authentification ###
 ########################
-api_key = "63a3075d3506d70001d66321"
-api_secret = "de536ec9-c452-41d2-b4f2-d7c76010bc60"
-api_passphrase = "myfirsttradingbottest010101"
+api_key = ""
+api_secret = ""
+api_passphrase = ""
 
 user = User(api_key, api_secret, api_passphrase)          # for account stuff
 market = Market(api_key, api_secret, api_passphrase)      # for prices stuff
