@@ -30,10 +30,11 @@ trade = Trade(api_key, api_secret, api_passphrase)        # for orders stuff
 symbol_base = "ETH"
 symbol_quote = "USDT"
 timeframe = "1day"
-days_back = 365
+
 
 url='https://api.kucoin.com'
-starting_date = float(round(time.time()))-days_back*24*3600
+go_back = 365
+starting_date = float(round(time.time()))-go_back*24*3600
 
 check = True
 while check:
