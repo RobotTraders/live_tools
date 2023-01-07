@@ -33,7 +33,7 @@ timeframe = "1day"
 
 
 url='https://api.kucoin.com'
-go_back = 365
+go_back = 2*365
 starting_date = float(round(time.time()))-go_back*24*3600
 
 check = True
