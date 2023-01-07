@@ -70,7 +70,6 @@ balance_base = float(user.get_account_list(currency=symbol_base)[0]['available']
 
 
 ### Price
-price = market.get_ticker(f'{symbol_base}-{symbol_quote}')
 price = float(market.get_ticker(f'{symbol_base}-{symbol_quote}')['price'])
 
 
