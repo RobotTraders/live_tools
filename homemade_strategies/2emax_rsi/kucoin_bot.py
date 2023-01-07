@@ -30,7 +30,7 @@ trade = Trade(api_key, api_secret, api_passphrase)        # for orders stuff
 symbol_base = "ETH"
 symbol_quote = "USDT"
 timeframe = "1day"
-days_back = 18
+days_back = 365
 
 url='https://api.kucoin.com'
 starting_date = float(round(time.time()))-days_back*24*3600
@@ -45,6 +45,7 @@ while check:
 data = pd.DataFrame(data['data'], columns = ['timestamp', 'open', 'close', 'high', 'low', 'amount', 'volume'])
 data["close"] = pd.to_numeric(data["close"])
 data['timestamp'] = pd.to_datetime(data['timestamp'], unit='s')
+data = data.iloc[::-1]
 
 
 ################
@@ -53,7 +54,7 @@ data['timestamp'] = pd.to_datetime(data['timestamp'], unit='s')
 data['EMA-st'] = ta.trend.ema_indicator(data['close'], 12)
 data['EMA-lt'] = ta.trend.ema_indicator(data['close'], 18)
 data['RSI'] = ta.momentum.rsi(data['close'])
-data = data.iloc[-1]
+data = data.iloc[-2]
 
 entry = data['EMA-st'] > data['EMA-lt'] and data['RSI'] < 70
 take_profit = data['EMA-st'] < data['EMA-lt'] and data['RSI'] > 30
@@ -97,13 +98,12 @@ if entry and balance_quote > min_quote_for_buy:
         amount = truncate(balance_quote/price)
         trade.create_market_order(f'{symbol_base}-{symbol_quote}', 'buy', size=amount)
         print(f"{current_time}: bought {amount} {symbol_base} at {price}")
-        # print(f"Bought {amount} {symbol_base} at {price}  (EMA-st = {data['EMA-st']}, EMA-lt = {data['EMA-lt']}, RSI = {data['RSI']})")
 
 elif take_profit and balance_base > min_base_for_sell:
         amount = truncate(balance_base)
         trade.create_market_order(f'{symbol_base}-{symbol_quote}', 'sell', size=amount)
         print(f"{current_time}: sold {amount} {symbol_base} at {price}")
-        # print(f"Sold {amount} {symbol_base} at {price} (EMA-st = {data['EMA-st']}, EMA-lt = {data['EMA-lt']}, RSI = {data['RSI']})")
+
 
 # else:
-        # print(f"Sorry mate, nothing much to do (EMA-st = {data['EMA-st']}, EMA-lt = {data['EMA-lt']}, RSI = {data['RSI']})")
+        # print(f"Patience is virtue")
