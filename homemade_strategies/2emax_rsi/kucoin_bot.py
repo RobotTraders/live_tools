@@ -106,4 +106,4 @@ elif take_profit and balance_base > min_base_for_sell:
         # print(f"Sold {amount} {symbol_base} at {price} (EMA-st = {data['EMA-st']}, EMA-lt = {data['EMA-lt']}, RSI = {data['RSI']})")
 
 # else:
-#   print(f"Sorry mate, nothing much to do (EMA-st = {data['EMA-st']}, EMA-lt = {data['EMA-lt']}, RSI = {data['RSI']})")
+        # print(f"Sorry mate, nothing much to do (EMA-st = {data['EMA-st']}, EMA-lt = {data['EMA-lt']}, RSI = {data['RSI']})")
