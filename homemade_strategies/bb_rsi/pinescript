@@ -1,0 +1,53 @@
+//@version=5
+strategy('Homemade Futures Trading Strategy', default_qty_value=100, commission_value=0.06, default_qty_type=strategy.percent_of_equity, commission_type=strategy.commission.percent, overlay=true)
+
+// *** Parameters *** 
+bb_length = 100
+bb_mult = 2
+atr_mult = 2
+rrr = 1./1.2
+
+// *** Bollinger Bands *** 
+bb_stddev = ta.stdev(close, bb_length)
+bb_average = ta.sma(close, bb_length)
+bb_upper = bb_average + bb_mult * bb_stddev
+bb_lower = bb_average - bb_mult * bb_stddev
+
+// *** RSI *** 
+rsi = ta.rsi(close, 14)
+
+// *** ATR *** 
+atr = ta.atr(14)
+
+// *** Signals ***
+entry_long = close > bb_upper and rsi > 70
+entry_short = close < bb_lower and rsi < 30
+exit_long = ta.crossunder(close, bb_average)   
+exit_short = ta.crossover(close, bb_average)
+
+// *** Risk management *** 
+entry_price = close
+stop_loss_price = entry_price - atr_mult * atr
+take_profit_price = entry_price + atr_mult * atr / rrr
+stop_loss_in_ticks = (entry_price - stop_loss_price) / syminfo.mintick
+take_profit_in_ticks = (take_profit_price - entry_price) / syminfo.mintick
+
+// *** Positions *** 
+if entry_long and strategy.position_size == 0
+    strategy.entry("Long", strategy.long)
+    strategy.exit("Long", loss = stop_loss_in_ticks, profit = take_profit_in_ticks, comment_loss = "SL Long", comment_profit = "TP Long")
+
+if entry_short and strategy.position_size == 0
+    strategy.entry("Short", strategy.short)
+    strategy.exit("Short", loss = stop_loss_in_ticks, profit = take_profit_in_ticks, comment_loss = "SL Short", comment_profit = "TP Short")
+
+if exit_long 
+    strategy.close("Long", "Exit Long")
+
+if exit_short
+    strategy.close("Short", "Exit Short")
+
+// *** Plots *** 
+plot(bb_upper, color=color.new(#ffb13b, 0), linewidth=1)
+plot(bb_average, color=color.new(#b43bff, 0), linewidth=1)
+plot(bb_lower, color=color.new(#ffb13b, 0), linewidth=1)
